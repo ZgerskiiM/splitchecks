@@ -1,12 +1,11 @@
 import App from './App.vue'
 
 createApp(App).mount('#app')
-
+import { createPinia } from 'pinia';
 import { createApp } from 'vue'
 import index from './pages/index.vue'
 import page2 from './pages/page2.vue'
 import page3 from './pages/page3.vue'
-import { createPinia } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import './style.css';
@@ -34,9 +33,8 @@ const router = createRouter({
 })
 
 const app = createApp(App)
+app.use(createPinia());
 app.use(router)
 app.mount('#app')
 app.use(vuetify)
-
-
-
+app.use(pinia)

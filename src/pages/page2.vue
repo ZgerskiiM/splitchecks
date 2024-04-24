@@ -1,29 +1,32 @@
 <script setup>
-  import { ref } from "vue";
-  import { v4 as uuidv4 } from 'uuid'; 
-  import {
-    useRouter
-  } from 'vue-router'
-  const router = useRouter()
-  const toogle = () => {
-  console.log(router);
-  router.push({name: 'addchecks'} );
+import { ref } from "vue";
+import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'vue-router';
+import { usePeopleStore } from '/src/stores/PeopleStore';
+
+const router = useRouter();
+const peopleStore = usePeopleStore();
+const firstname = ref('');
+const valid = ref(true);
+const nameRules = ref([
+  (v) => !!v || 'Name is required'
+]);
+
+const addUser = () => {
+  if (valid.value) {
+    const newPerson = { id: uuidv4(), name: firstname.value };
+    peopleStore.addPerson(newPerson);
+    firstname.value = '';
+  }
+}
+
+const removeUser = (index) => {
+  peopleStore.removePerson(index);
+}
+
+const toogle = () => {
+  router.push({ name: 'addchecks' });
 };
-
-  const dialog = ref(true);
-  const users = ref([
-    { id: uuidv4(), name: "" } 
-  ]);
-
-
-  function addUser(firstName) {
-    users.value.push({ id: uuidv4(), name: firstName });
-  }
-
-
-  function removeUser(index) {
-    users.value.splice(index, 1);
-  }
 </script>
 
 <template>
@@ -32,18 +35,23 @@
     <v-form v-model="valid">
       <v-container>
         <v-text-field v-model="firstname" :rules="nameRules" label="Enter Name"></v-text-field>
-        <v-btn class="mt-5" @click="addUser(firstname), firstname = ''">Add User</v-btn>
+        <v-btn class="mt-5" @click="addUser">Add User</v-btn>
       </v-container>
-      <div v-for="(user, i) in users" :key="user.id">
-        <v-card border-color="white" color="white" rounded solo flat class="d-flex flex-column align-items-center mt-5">{{user.name}}
-          <v-btn @click="removeUser(i)" append-icon="mdi-close"></v-btn>
-        </v-card>
-      </div>
     </v-form>
-    <v-btn @click="dialog = false" class="mt-5">Close</v-btn>
-    <v-btn class="mt-5" @click="toogle">Continue</v-btn>
+    <v-divider class="mt-5"></v-divider>
+    <v-container>
+      <v-list>
+        <v-list-item v-for="(person, index) in peopleStore.people" :key="person.id">
+          <v-list-item-content>{{ person.name }}</v-list-item-content>
+          <v-list-item-action>
+            <v-btn icon @click="removeUser(index)">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+    </v-container>
+    <v-divider class="mt-5"></v-divider>
+    <v-btn @click="toogle">Continue</v-btn>
   </v-card>
 </template>
-
-<style scoped>
-</style>

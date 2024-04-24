@@ -1,10 +1,11 @@
 <script setup>
   import { ref } from "vue";
-  import { v4 as uuidv4 } from 'uuid'; 
-
+  import { v4 as uuidv4 } from 'uuid';
+  import { usePeopleStore } from '/src/stores/PeopleStore';
+  const peopleStore = usePeopleStore();
   const dialog = ref(true);
   const products = ref([
-    { id: uuidv4(), foodname: "", cost: "" } 
+    { id: uuidv4(), foodname: "", cost: "" }
   ]);
 
 
@@ -27,12 +28,15 @@
         <v-btn class="mt-3" @click="addProduct(foodname), foodname = ''">Add product</v-btn>
       </v-container>
       <div v-for="(product, i) in products" :key="product.id">
+        <v-list-item v-for="(person, index) in peopleStore.people" :key="person.id">
+          <v-list-item-content>{{ person.name }}</v-list-item-content>
+        </v-list-item>
         <v-card border-color="white" color="white" rounded solo flat class="d-flex flex-column align-items-center mt-5">{{product.foodname}}
           <v-btn @click="removeFood(i)" append-icon="mdi-close"></v-btn>
         </v-card>
       </div>
       <v-card>
-        
+
       </v-card>
     </v-form>
     <v-btn @click="dialog = false" class="mt-5">Close</v-btn>
