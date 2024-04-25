@@ -9,8 +9,6 @@ import page3 from './pages/page3.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import './style.css';
-
-
 import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
@@ -37,4 +35,3 @@ app.use(createPinia());
 app.use(router)
 app.mount('#app')
 app.use(vuetify)
-app.use(pinia)

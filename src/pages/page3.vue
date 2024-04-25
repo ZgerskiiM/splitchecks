@@ -2,10 +2,15 @@
   import { ref } from "vue";
   import { v4 as uuidv4 } from 'uuid';
   import { usePeopleStore } from '/src/stores/PeopleStore';
+  /**Не работает с пинией   import { useProducteStore } from '/src/stores/ProductStore';*/
+  
+
+  const productStore = useProductStore();
   const peopleStore = usePeopleStore();
-  const dialog = ref(true);
+  const foodname = ref('')
+  const cost = ref ('')
   const products = ref([
-    { id: uuidv4(), foodname: "", cost: "" }
+    {foodname: "", cost: "" }
   ]);
 
 
@@ -21,11 +26,12 @@
 
 <template>
   <v-card class="d-flex flex-column align-center justify-center" width="500px" height="600px" border-radius="40px" background-color="white">
-    <h2>Add product</h2>
+    <h2>Добавьте продукты</h2>
     <v-form v-model="valid">
       <v-container>
-        <v-text-field v-model="foodname" label="Enter position"></v-text-field>
-        <v-btn class="mt-3" @click="addProduct(foodname), foodname = ''">Add product</v-btn>
+        <v-text-field v-model="foodname" label="Введите название"></v-text-field>
+        <v-text-field v-model="foodname" label="Введите цену"></v-text-field>
+        <v-btn class="mt-3" @click="addProduct(foodname), foodname = ''">Добавить</v-btn>
       </v-container>
       <div v-for="(product, i) in products" :key="product.id">
         <v-list-item v-for="(person, index) in peopleStore.people" :key="person.id">
@@ -39,8 +45,7 @@
 
       </v-card>
     </v-form>
-    <v-btn @click="dialog = false" class="mt-5">Close</v-btn>
-    <v-btn class="mt-5">Continue</v-btn>
+    <v-btn class="mt-5">Продолжить</v-btn>
   </v-card>
 </template>
 
