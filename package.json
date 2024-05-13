@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "material-design-icons-iconfont": "^6.7.0",
     "pinia": "^2.1.7",
     "uuid": "^9.0.1",
     "vite-plugin-vuetify": "^2.0.3",

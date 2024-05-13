@@ -34,11 +34,12 @@ const toogle = () => {
 <template>
         <v-form v-model="valid" @submit.prevent="">
       <v-container>
-        <v-text-field v-model="firstname" label="Enter Name"></v-text-field>
+        <v-text-field 
+        v-model="firstname" 
+        label="Введите имя"></v-text-field>
         <v-btn class="mt-5" @click="addUser">Добавить</v-btn>
       </v-container>
     </v-form>
-    <v-divider class="mt-5"></v-divider>
     <v-container>
       <v-list class = "d-flex flex-row">
         <v-list-item v-for="(person, index) in peopleStore.people" :key="person.id">
@@ -52,5 +53,5 @@ const toogle = () => {
       </v-list>
     </v-container>
     <v-divider class="mt-5"></v-divider>
-    <v-btn @click="toogle">Продолжить</v-btn>
+    <v-btn @click="toogle">Добавить людей</v-btn>
 </template>

@@ -8,6 +8,7 @@ state: () => ({
 actions: {
     addProduct(product) {
     this.product.push(product);
-    }
+    
+  }
 }
 });
