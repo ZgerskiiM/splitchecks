@@ -1,6 +1,6 @@
 import App from './App.vue'
 
-createApp(App).mount('#app')
+
 import { createPinia } from 'pinia';
 import { createApp } from 'vue'
 import index from './pages/index.vue'
@@ -14,7 +14,6 @@ import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 const vuetify = createVuetify({
   components,
@@ -24,9 +23,9 @@ const vuetify = createVuetify({
 const router = createRouter({
   routes: [
   {path: '/', component: index},
-  {path: '/123', name: 'addpeople', component: page2},
+  {path: '/addpeople', name: 'addpeople', component: page2},
   {path: '/checks', name: 'addchecks', component: page3},
-  {path: '/result', name: 'result', component: page4}
+  {path: '/result', name: 'result', component: page4},
 ],
   history: createWebHistory()
 })
