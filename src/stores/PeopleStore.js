@@ -13,5 +13,6 @@ export const usePeopleStore = defineStore('people', {
         removePerson(index) {
             this.people.splice(index, 1);
         }
+        
     }
 });
