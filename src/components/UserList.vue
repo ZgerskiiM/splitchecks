@@ -13,7 +13,7 @@ const valid = ref(true);
 const addUser = () => {
   if (valid.value)
     if (firstname.value.length > 0) {
-    const newPerson = { id: uuidv4(), name: firstname.value, selected: false };
+    const newPerson = { id: uuidv4(), name: firstname.value, selected: false, eat: [] };
     peopleStore.addPerson(newPerson);
     firstname.value = '';
   }
@@ -55,3 +55,9 @@ const toogle = () => {
     <v-divider class="mt-5"></v-divider>
     <v-btn @click="toogle">Добавить людей</v-btn>
 </template>
+
+<style>
+v-btn {
+  background-color: rgb(0, 131, 246);
+}
+</style>

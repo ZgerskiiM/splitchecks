@@ -12,9 +12,9 @@
   const foodname = ref('')
   const foodcost = ref ('')
   const payerPerson = ref(null);
-  const selectedPerson = ref(null);
+  const eatBy = ref([]);
   const valid = ref(true);
-  const selected = ref(false);
+
 
   const addProduct = () => {
     if (valid.value && foodname.value.length > 0 && payerPerson.value) {
@@ -22,13 +22,15 @@
         id: uuidv4(),
         foodname: foodname.value,
         foodcost: foodcost.value,
-        payerPerson: payerPerson.value
+        payerPerson: payerPerson.value,
+        eatBy: [],
         };
         productStore.addProduct(newProduct);
         foodname.value = '';
         foodcost.value = '';
         payerPerson.value = null;
         console.log(productStore.products)
+
     }
   }
 
@@ -40,17 +42,22 @@
     const person = peopleStore.people.find(p => p.id === personId);
     if (person) {
       person.selected = isSelected;
+      if (person.selected = isSelected) {
+        productStore.products.eatBy = person.selected
+      }
     }
     console.log (peopleStore.people)
+    console.log (productStore.products)
   }
-const toogle = () => {
-  if (productStore.products.length >= 1) {
-    router.push({ name: 'result' }); }
-  else {
-    alert ("Добавьте хотя бы одну позицию");
-    console.log(productStore.products)
+
+  const toogle = () => {
+    if (productStore.products.length >= 1) {
+      router.push({ name: 'result' }); }
+    else {
+      alert ("Добавьте хотя бы одну позицию");
+      console.log(productStore.products)
+    }
   }
-}
 
 </script>
 <template>
@@ -62,7 +69,8 @@ const toogle = () => {
     </v-text-field>
       <v-text-field
       v-model="foodcost"
-      label="Введите цену">
+      label="Введите цену"
+      type = "Number">
     </v-text-field>
     <v-select
       v-model="payerPerson"
@@ -96,5 +104,5 @@ const toogle = () => {
       </v-card>
     </div>
   </v-form>
-  <v-btn @click="toogle" class="mt-5">Итог</v-btn>
+  <v-btn @click="toogle" class=" mt-5">Итог</v-btn>
 </template>
