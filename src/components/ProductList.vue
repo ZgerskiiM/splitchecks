@@ -14,6 +14,7 @@
   const payerPerson = ref(null);
   const eatBy = ref([]);
   const valid = ref(true);
+  const show = ref(false);
 
 
   const addProduct = () => {
@@ -39,11 +40,11 @@
   }
 
   const handleSelectionChange = (personId, isSelected) => {
-    const person = peopleStore.people.find(p => p.id === personId);
+    const person = peopleStore.people.map(p => p.id === personId);
     if (person) {
       person.selected = isSelected;
       if (person.selected = isSelected) {
-        productStore.products.eatBy = person.selected
+        productStore.products.eatBy = person.firstname
       }
     }
     console.log (peopleStore.people)
@@ -61,7 +62,8 @@
 
 </script>
 <template>
-<v-form v-model="valid">
+
+<v-form v-model="valid" class="d-flex flex-column">
     <v-container>
       <v-text-field
       v-model="foodname"
@@ -90,19 +92,32 @@
       rounded solo flat
       class="d-flex flex-column align-items-center mt-5">
         {{ product.foodname }} {{ product.foodcost }} {{ product.payerPerson }}
-        <div v-for="person in peopleStore.people" :key="person.id">
-    <v-checkbox
-      :label="person.name"
-      v-model="person.selected"
-      @change="handleSelectionChange(person.id, person.selected)">
-    </v-checkbox>
-        </div>
+        <v-btn
+        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+        @click="show = !show"
+      ></v-btn>
+      <div v-for="person in peopleStore.people" :key="person.id">
+        <v-expand-transition>
+      <div v-show="show">
+        <v-divider></v-divider>
+      <v-checkbox
+        class = "d-flex flex-row"
+        :label="person.name"
+        v-model="person.selected"
+        @change="handleSelectionChange(person.id, person.selected)">
+      </v-checkbox>
+    </div>
+    </v-expand-transition>
+    </div>
           <v-btn
           @click="removeProduct(index)"
           append-icon="mdi-close">
           </v-btn>
+          
       </v-card>
     </div>
+    
   </v-form>
   <v-btn @click="toogle" class=" mt-5">Итог</v-btn>
+
 </template>
