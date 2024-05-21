@@ -46,7 +46,6 @@ const removeProduct = (index) => {
 
 const handleSelectionChange = (productId, personId, isSelected) => {
     productStore.getProduct(productId).peopleSelection[personId] = isSelected;
-    console.log(productStore.products)
 }
 
 const toggle = () => {
@@ -59,35 +58,109 @@ const toggle = () => {
 </script>
 
 <template>
-    <v-form v-model="valid" class="d-flex flex-column">
-        <v-container>
+    <v-card 
+    class="d-flex 
+    flex-column
+    align-center 
+    justify-center pt-1" 
+    >
+    <h2>Добавьте продукты</h2>
+    <v-form v-model="valid">
+        <v-container class = "d-flex flex-column justify-center align-center">
             <v-text-field v-model="foodname" label="Введите название"></v-text-field>
             <v-text-field v-model="foodcost" label="Введите цену" type="Number"></v-text-field>
-            <v-select v-model="payerPerson" :items="peopleStore.people.map(person => person.name)" item-value="id" item-text="person.name" chips label="Кто платил?"></v-select>
+            <v-select v-model="payerPerson" 
+            :items="peopleStore.people.map(person => person.name)" 
+            item-value="id" 
+            item-text="person.name" c
+            hips label="Кто платил?">
+            </v-select>
             <v-btn class="mt-3" @click="addProduct(foodname,foodcost,payerPerson)">Добавить</v-btn>
         </v-container>
+        <v-divider></v-divider>
+        <v-container>
+        <v-list class = "d-flex flex-column align-start ">
+        <v-list-item v-for="(product, index) in productStore.products" :key="product.id">
+            <v-card>
+            <v-list-item-content class = "d-flex flex-column justify-start align-start ma-5 ">
+                <v-list-item-content class = "d-flex flex-row justify-start align-center ml-5 ">
+                <v-list-item-action class = "mr-5 pb-5 pl-4">
+                  <v-btn icon = "mdi-close" @click="removeProduct(index)">
+                  </v-btn>
+                </v-list-item-action>
+                <v-text-field
+                label ="Название"
+                variant ="solo"
+                readonly>
+                {{ product.foodname }}</v-text-field> 
+                <v-text-field
+                label ="Название"
+                variant ="solo"
+                readonly>
+                {{ product.foodcost }} 
+                </v-text-field> 
+                <v-text-field
+                label ="Название"
+                variant ="solo"
+                readonly>
+                {{ product.payerPerson }}
+                </v-text-field> 
+                <v-btn class = "mb-5 ml-5"
+                 :icon="product.show ? 'mdi-chevron-up' : 'mdi-chevron-down'" 
+                @click="product.show = !product.show">
+                </v-btn>
+                </v-list-item-content>
+                <v-list class ="d-flex flex-row justify-start"  v-if="product.show">
+                    <v-list-item v-for="person in peopleStore.people" :key="person.id">
+                        <v-checkbox
+                         :label="person.name"
+                         v-model="product.peopleSelection[person.id]" 
+                         @change="handleSelectionChange(product.id, person.id, product.peopleSelection[person.id])">
+                        </v-checkbox>
 
-        <div v-for="(product, index) in productStore.products" :key="product.id">
-            <v-card border-color="white" color="white" rounded solo flat class="d-flex flex-column align-items-center mt-5">
-                {{ product.foodname }} {{ product.foodcost }} {{ product.payerPerson }}
-                <v-btn :icon="product.show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="product.show = !product.show"></v-btn>
-                <div v-if="product.show">
-                    <v-divider></v-divider>
-                    <div v-for="person in peopleStore.people" :key="person.id">
-                        <v-checkbox class="d-flex flex-row" :label="person.name" v-model="product.peopleSelection[person.id]" @change="handleSelectionChange(product.id, person.id, product.peopleSelection[person.id])"></v-checkbox>
-                    </div>
-                </div>
-                <v-btn @click="removeProduct(index)" append-icon="mdi-close"></v-btn>
+                    </v-list-item>
+                </v-list>
+            </v-list-item-content>
             </v-card>
-        </div>
+        </v-list-item>
+    </v-list>
+    </v-container>
     </v-form>
 
-    <v-btn @click="toggle" class="mt-5">Итог</v-btn>
+    </v-card>
+   <v-card class = "d-flex justify-center align-center mt-2"
+   height = "4em">
+    <v-btn  @click="toggle"
+    width = "50em">Результаты
+    </v-btn>
+  </v-card>
+
 </template>
 <style scoped lang="scss">
+.v-btn {
+    border-radius: 1em
+  }
 
+  .v-text-field {
+    width: 12em
+  }
 
-  .v-btn {
-    border-radius: 15px;
+  .v-card {
+    border-radius: 1em
+  }
+  
+  .v-list-item {
+    .v-card {
+      border-radius:0em
+    }
+    .v-btn {
+      border-radius:10em
+    }
+  }
+
+  .v-checkbox {
+    border:1px solid white;
+    border-radius: 1em;
+
   }
 </style>
