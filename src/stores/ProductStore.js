@@ -6,10 +6,13 @@ state: () => ({
 }),
 actions: {
     addProduct(product) {
-      this.products.push(product);
+        this.products.push(product);
     },
     removeProduct(index) {
         this.products.splice(index, 1);
+    },
+    getProduct(id) {
+        return this.products.find(product => product.id === id);
     }
 }
 });
