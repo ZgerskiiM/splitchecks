@@ -13,6 +13,7 @@ const foodname = ref('');
 const foodcost = ref('');
 const payerPerson = ref(null);
 const valid = ref(true);
+const eatBy = ref([])
 
 const addProduct = () => {
     if (valid.value && foodname.value.length > 0 && payerPerson.value) {
@@ -21,7 +22,7 @@ const addProduct = () => {
             foodname: foodname.value,
             foodcost: foodcost.value,
             payerPerson: payerPerson.value,
-            eatBy: [], 
+            eatBy:eatBy.length , 
             peopleSelection: Object.fromEntries(peopleStore.people.map(person => [person.id, false])),
             show: false
         };
@@ -33,7 +34,7 @@ const addProduct = () => {
                 handleSelectionChange(newProduct.id, personId, true);
             }
         }
-
+        console.log (result)
         foodname.value = '';
         foodcost.value = '';
         payerPerson.value = null;
@@ -43,9 +44,12 @@ const addProduct = () => {
 const removeProduct = (index) => {
     productStore.removeProduct(index);
 }
+const result = Object.keys(newProduct).filter(key => newProduct[key].peopleSelection) 
+
 
 const handleSelectionChange = (productId, personId, isSelected) => {
     productStore.getProduct(productId).peopleSelection[personId] = isSelected;
+
 }
 
 const toggle = () => {
@@ -62,8 +66,7 @@ const toggle = () => {
     class="d-flex 
     flex-column
     align-center 
-    justify-center pt-1" 
-    >
+    justify-center pt-1">
     <h2>Добавьте продукты</h2>
     <v-form v-model="valid">
         <v-container class = "d-flex flex-column justify-center align-center">
@@ -72,8 +75,8 @@ const toggle = () => {
             <v-select v-model="payerPerson" 
             :items="peopleStore.people.map(person => person.name)" 
             item-value="id" 
-            item-text="person.name" c
-            hips label="Кто платил?">
+            item-text="person.name" 
+            chips label="Кто платил?">
             </v-select>
             <v-btn class="mt-3" @click="addProduct(foodname,foodcost,payerPerson)">Добавить</v-btn>
         </v-container>
@@ -89,18 +92,15 @@ const toggle = () => {
                   </v-btn>
                 </v-list-item-action>
                 <v-text-field
-                label ="Название"
                 variant ="solo"
                 readonly>
                 {{ product.foodname }}</v-text-field> 
                 <v-text-field
-                label ="Название"
                 variant ="solo"
                 readonly>
                 {{ product.foodcost }} 
                 </v-text-field> 
                 <v-text-field
-                label ="Название"
                 variant ="solo"
                 readonly>
                 {{ product.payerPerson }}
@@ -117,7 +117,6 @@ const toggle = () => {
                          v-model="product.peopleSelection[person.id]" 
                          @change="handleSelectionChange(product.id, person.id, product.peopleSelection[person.id])">
                         </v-checkbox>
-
                     </v-list-item>
                 </v-list>
             </v-list-item-content>
@@ -126,11 +125,10 @@ const toggle = () => {
     </v-list>
     </v-container>
     </v-form>
-
     </v-card>
    <v-card class = "d-flex justify-center align-center mt-2"
    height = "4em">
-    <v-btn  @click="toggle"
+    <v-btn  @click="result"
     width = "50em">Результаты
     </v-btn>
   </v-card>
