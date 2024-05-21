@@ -84,3 +84,10 @@ const toggle = () => {
 
     <v-btn @click="toggle" class="mt-5">Итог</v-btn>
 </template>
+<style scoped lang="scss">
+
+
+  .v-btn {
+    border-radius: 15px;
+  }
+</style>
