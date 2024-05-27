@@ -32,12 +32,12 @@ const toogle = () => {
   }
 </script>
 <template>
-  <v-card 
-  class="d-flex 
+  <v-card
+  class="d-flex
   flex-column
-  align-center 
-  justify-start pt-1" 
-  width="800px">
+  align-center
+  justify-start pt-1"
+  width="1000px">
   <h2>Добавьте людей</h2>
     <v-form v-model="valid" @submit.prevent="">
       <v-container>
@@ -68,7 +68,7 @@ const toogle = () => {
         </v-list-item>
       </v-list>
     </v-container>
-    
+
    </v-card>
    <v-card class = "d-flex justify-center align-center mt-2"
    height = "4em">
@@ -98,7 +98,7 @@ const toogle = () => {
   .v-card {
     border-radius: 1em
   }
-  
+
   .v-list-item {
     .v-card {
       border-radius:0em

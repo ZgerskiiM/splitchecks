@@ -4,13 +4,18 @@ import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'vue-router';
 import { usePeopleStore } from '/src/stores/PeopleStore';
 import { useProductStore } from '/src/stores/ProductStore';
+import ProductList from '/src/components/ProductList.vue'
 
-const router = useRouter();
-const peopleStore = usePeopleStore();
 const productStore = useProductStore();
-const firstname = ref('');
-const valid = ref(true);
 
+const FullCost = (productId) => {
+    const product = productStore.getProduct(productId);
+    product.eatBy.forEach(Element => {
+        product.foodcost / productStore.products.eatBy.length
+
+    });
+    console.log(productStore.products.foodcost)
+}
 </script>
 
 <template>
@@ -18,8 +23,12 @@ const valid = ref(true);
     class="d-flex
     flex-column
     align-center
-    justify-center pt-1"></v-card>
+    justify-center pt-1"
+    width="1000px">
     <h2>Результаты</h2>
+    <v-divider></v-divider>
+    <v-container></v-container>
+    </v-card>
     <v-btn @click ="FullCost" ></v-btn>
 </template>
 

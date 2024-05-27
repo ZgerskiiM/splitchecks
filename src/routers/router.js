@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
 import Main from '/src/pages/Main.vue';
 import AddingPeople from '/src/pages/AddingPeople.vue';
 import AddingChecks from '/src/pages/AddingChecks.vue';
@@ -14,4 +13,3 @@ export const router = createRouter({
   ],
     history: createWebHistory()
   });
-

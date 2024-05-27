@@ -25,15 +25,12 @@ const addProduct = () => {
             peopleSelection: Object.fromEntries(peopleStore.people.map(person => [person.id, false])),
             show: false
         };
-
         productStore.addProduct(newProduct);
-
         for (const personId in newProduct.peopleSelection) {
             if (newProduct.peopleSelection[personId]) {
                 handleSelectionChange(newProduct.id, personId, true);
             }
         }
-
         foodname.value = '';
         foodcost.value = '';
         payerPerson.value = null;
@@ -61,9 +58,9 @@ const handleSelectionChange = (productId, personId, isSelected) => {
     }
 }
 
-const toggle = () => {
-    if (productStore.products.length >= 1) {
-      
+const toggle = (productId) => {
+    if (productStore.products.length >= 1 && productStore.getProduct(productId).eatBy.length > 0) {
+
         router.push({ name: 'result' });
     } else {
         alert("Добавьте хотя бы одну позицию");
@@ -76,7 +73,8 @@ const toggle = () => {
     class="d-flex
     flex-column
     align-center
-    justify-center pt-1">
+    justify-center pt-1"
+    width="1000px">
     <h2>Добавьте продукты</h2>
     <v-form v-model="valid">
         <v-container class = "d-flex flex-column justify-center align-center">
@@ -136,8 +134,8 @@ const toggle = () => {
     </v-container>
     </v-form>
     </v-card>
-   <v-card class = "d-flex justify-center align-center mt-2"
-   height = "4em">
+    <v-card class = "d-flex justify-center align-center mt-2"
+    height = "4em">
     <v-btn @click="toggle"
     width = "50em">Результаты
     </v-btn>

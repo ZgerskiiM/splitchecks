@@ -8,9 +8,8 @@
 </script>
 <template>
     <div class = "d-flex justify-center flex-column" >
-
       <h1 class = "mb-10">Split your checks</h1>
-      <h2>It's easy way to split your checks in 
+      <h2>It's easy way to split your checks in
       restaraunts and other places
       <div>
         <v-btn @click="toogle" class = "mt-10">Начать</v-btn>
@@ -22,5 +21,8 @@
 
 
 <style scoped>
-
+.v-btn {
+    border-radius: 1em;
+    width: 6em
+  }
 </style>
