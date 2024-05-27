@@ -63,6 +63,7 @@ const handleSelectionChange = (productId, personId, isSelected) => {
 
 const toggle = () => {
     if (productStore.products.length >= 1) {
+      
         router.push({ name: 'result' });
     } else {
         alert("Добавьте хотя бы одну позицию");

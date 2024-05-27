@@ -6,7 +6,7 @@ import UserList from '/src/components/UserList.vue';
 <template>
 
       <UserList></UserList>
- 
+
 </template>
 <style scoped lang="scss">
 </style>
