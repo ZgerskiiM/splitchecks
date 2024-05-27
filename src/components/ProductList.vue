@@ -13,7 +13,6 @@ const foodname = ref('');
 const foodcost = ref('');
 const payerPerson = ref(null);
 const valid = ref(true);
-const eatBy = ref([])
 
 const addProduct = () => {
     if (valid.value && foodname.value.length > 0 && payerPerson.value) {
@@ -22,7 +21,7 @@ const addProduct = () => {
             foodname: foodname.value,
             foodcost: foodcost.value,
             payerPerson: payerPerson.value,
-            eatBy:eatBy.length , 
+            eatBy: [],
             peopleSelection: Object.fromEntries(peopleStore.people.map(person => [person.id, false])),
             show: false
         };
@@ -34,7 +33,7 @@ const addProduct = () => {
                 handleSelectionChange(newProduct.id, personId, true);
             }
         }
-        console.log (result)
+
         foodname.value = '';
         foodcost.value = '';
         payerPerson.value = null;
@@ -44,12 +43,22 @@ const addProduct = () => {
 const removeProduct = (index) => {
     productStore.removeProduct(index);
 }
-const result = Object.keys(newProduct).filter(key => newProduct[key].peopleSelection) 
-
 
 const handleSelectionChange = (productId, personId, isSelected) => {
-    productStore.getProduct(productId).peopleSelection[personId] = isSelected;
+    const product = productStore.getProduct(productId);
+    product.peopleSelection[personId] = isSelected;
+    console.log(productStore.products)
 
+    if (isSelected) {
+        if (!product.eatBy.includes(personId)) {
+            product.eatBy.push(personId);
+        }
+    } else {
+        const index = product.eatBy.indexOf(personId);
+        if (index !== -1) {
+            product.eatBy.splice(index, 1);
+        }
+    }
 }
 
 const toggle = () => {
@@ -62,20 +71,20 @@ const toggle = () => {
 </script>
 
 <template>
-    <v-card 
-    class="d-flex 
+    <v-card
+    class="d-flex
     flex-column
-    align-center 
+    align-center
     justify-center pt-1">
     <h2>Добавьте продукты</h2>
     <v-form v-model="valid">
         <v-container class = "d-flex flex-column justify-center align-center">
             <v-text-field v-model="foodname" label="Введите название"></v-text-field>
             <v-text-field v-model="foodcost" label="Введите цену" type="Number"></v-text-field>
-            <v-select v-model="payerPerson" 
-            :items="peopleStore.people.map(person => person.name)" 
-            item-value="id" 
-            item-text="person.name" 
+            <v-select v-model="payerPerson"
+            :items="peopleStore.people.map(person => person.name)"
+            item-value="id"
+            item-text="person.name"
             chips label="Кто платил?">
             </v-select>
             <v-btn class="mt-3" @click="addProduct(foodname,foodcost,payerPerson)">Добавить</v-btn>
@@ -94,28 +103,28 @@ const toggle = () => {
                 <v-text-field
                 variant ="solo"
                 readonly>
-                {{ product.foodname }}</v-text-field> 
+                {{ product.foodname }}</v-text-field>
                 <v-text-field
                 variant ="solo"
                 readonly>
-                {{ product.foodcost }} 
-                </v-text-field> 
+                {{ product.foodcost }}
+                </v-text-field>
                 <v-text-field
                 variant ="solo"
                 readonly>
                 {{ product.payerPerson }}
-                </v-text-field> 
+                </v-text-field>
                 <v-btn class = "mb-5 ml-5"
-                 :icon="product.show ? 'mdi-chevron-up' : 'mdi-chevron-down'" 
+                  :icon="product.show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
                 @click="product.show = !product.show">
                 </v-btn>
                 </v-list-item-content>
                 <v-list class ="d-flex flex-row justify-start"  v-if="product.show">
                     <v-list-item v-for="person in peopleStore.people" :key="person.id">
                         <v-checkbox
-                         :label="person.name"
-                         v-model="product.peopleSelection[person.id]" 
-                         @change="handleSelectionChange(product.id, person.id, product.peopleSelection[person.id])">
+                          :label="person.name"
+                          v-model="product.peopleSelection[person.id]"
+                          @change="handleSelectionChange(product.id, person.id, product.peopleSelection[person.id])">
                         </v-checkbox>
                     </v-list-item>
                 </v-list>
@@ -128,12 +137,13 @@ const toggle = () => {
     </v-card>
    <v-card class = "d-flex justify-center align-center mt-2"
    height = "4em">
-    <v-btn  @click="result"
+    <v-btn @click="toggle"
     width = "50em">Результаты
     </v-btn>
   </v-card>
 
 </template>
+
 <style scoped lang="scss">
 .v-btn {
     border-radius: 1em
@@ -146,7 +156,7 @@ const toggle = () => {
   .v-card {
     border-radius: 1em
   }
-  
+
   .v-list-item {
     .v-card {
       border-radius:0em
@@ -159,6 +169,5 @@ const toggle = () => {
   .v-checkbox {
     border:1px solid white;
     border-radius: 1em;
-
   }
 </style>
