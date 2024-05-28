@@ -6,6 +6,7 @@
     router.push({name: 'addpeople'} );
   };
 </script>
+
 <template>
     <div class = "d-flex justify-center flex-column" >
       <h1 class = "mb-10">Split your checks</h1>
@@ -17,8 +18,6 @@
     </h2>
     </div>
 </template>
-
-
 
 <style scoped>
 .v-btn {

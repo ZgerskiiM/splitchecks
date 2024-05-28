@@ -37,15 +37,16 @@ const toogle = () => {
   flex-column
   align-center
   justify-start pt-1"
-  width="1000px">
-  <h2>Добавьте людей</h2>
+  width="62.5em">
+  <v-card-title><h2>Добавьте людей</h2>
+  </v-card-title>
     <v-form v-model="valid" @submit.prevent="">
       <v-container>
         <v-text-field
         v-model="firstname"
         label="Введите имя">
         </v-text-field>
-          <v-btn  @click="addUser">Добавить</v-btn>
+          <v-btn @click="addUser">Добавить</v-btn>
       </v-container>
       </v-form>
       <v-divider></v-divider>
@@ -69,9 +70,9 @@ const toogle = () => {
       </v-list>
     </v-container>
 
-   </v-card>
-   <v-card class = "d-flex justify-center align-center mt-2"
-   height = "4em">
+    </v-card>
+    <v-card class = "d-flex justify-center align-center mt-2"
+    height = "4em">
     <v-btn  @click="toogle"
     width = "50em">Перейти к продуктам
     </v-btn>

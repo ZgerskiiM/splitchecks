@@ -3,10 +3,7 @@ import ProductList from '/src/components/ProductList.vue';
 </script>
 
 <template>
-
-
-    <ProductList></ProductList>
-
+    <ProductList/>
 </template>
 
 <style scoped>

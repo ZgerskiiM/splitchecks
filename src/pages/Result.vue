@@ -2,5 +2,5 @@
 import ResultList from '/src/components/ResultList.vue';
 </script>
 <template>
-    <ResultList></ResultList>
+    <ResultList/>
 </template>

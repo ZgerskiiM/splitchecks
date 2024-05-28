@@ -12,7 +12,9 @@ export const usePeopleStore = defineStore('people', {
         },
         removePerson(index) {
             this.people.splice(index, 1);
+        },
+        getPerson(id) {
+            return this.people.find(people => people.id === id);
         }
-        
     }
 });

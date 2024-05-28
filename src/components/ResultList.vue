@@ -8,14 +8,6 @@ import ProductList from '/src/components/ProductList.vue'
 
 const productStore = useProductStore();
 
-const FullCost = (productId) => {
-    const product = productStore.getProduct(productId);
-    product.eatBy.forEach(Element => {
-        product.foodcost / productStore.products.eatBy.length
-
-    });
-    console.log(productStore.products.foodcost)
-}
 </script>
 
 <template>
@@ -28,6 +20,11 @@ const FullCost = (productId) => {
     <h2>Результаты</h2>
     <v-divider></v-divider>
     <v-container></v-container>
+    <v-list-item v-for="(product) in productStore.products" :key="product.id">
+    Пользователю {{product.payerPerson}} должны:
+    <v-list-item ></v-list-item>
+    {{ product.eatBy.toString() }} - {{ product.cost }}
+    </v-list-item>
     </v-card>
     <v-btn @click ="FullCost" ></v-btn>
 </template>
