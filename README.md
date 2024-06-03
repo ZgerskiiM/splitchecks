@@ -4,10 +4,12 @@
 
 # Запуск
 
-##Установка зависимостей:
+## Установка зависимостей:
+```
+npm install
+```
 
-*npm install
-
-##Запуск Development-сервера:
-
-*npm run dev
+## Запуск Development-сервера:
+```
+npm run dev
+```
