@@ -1,4 +1,3 @@
-// stores/people.js
 import { defineStore } from 'pinia';
 
 export const usePeopleStore = defineStore('people', {
@@ -15,6 +14,9 @@ export const usePeopleStore = defineStore('people', {
         },
         getPerson(id) {
             return this.people.find(people => people.id === id);
+        },
+        PersonName (firstname) {
+            return this.people.find(people => people.firstname === firstname)
         }
     }
 });

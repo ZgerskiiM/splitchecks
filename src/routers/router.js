@@ -6,7 +6,7 @@ import Result from '/src/pages/Result.vue';
 
 export const router = createRouter({
     routes: [
-    {path: '/', component: Main},
+    {path: '/', name:'Home', component: Main},
     {path: '/addpeople', name: 'addpeople', component: AddingPeople},
     {path: '/checks', name: 'addchecks', component: AddingChecks},
     {path: '/result', name: 'result', component: Result},

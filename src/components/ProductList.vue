@@ -12,7 +12,6 @@ const foodname = ref('');
 const foodcost = ref('');
 const payerPerson = ref(null);
 const valid = ref(true);
-const eatBy = ref([]);
 
 const addProduct = () => {
     if (valid.value && foodname.value.length > 0 && payerPerson.value) {
@@ -35,25 +34,23 @@ const addProduct = () => {
 
 const removeProduct = (index) => {
     productStore.removeProduct(index);
-
 };
 
-const handleSelectionChange = (productId, personId,isSelected) => {
+const handleSelectionChange = (productId, personId, isSelected) => {
     const product = productStore.getProduct(productId);
+    const person = peopleStore.getPerson(personId);
     product.peopleSelection[personId] = isSelected;
-
     if (isSelected) {
-        if (!product.eatBy.includes(personId)) {
-            product.eatBy.push(personId);
+        if (!product.eatBy.some(e => e.id === personId)) {
+            product.eatBy.push({ id: personId, name: person.name});
         }
     } else {
-        const index = product.eatBy.indexOf(personId);
+        const index = product.eatBy.findIndex(e => e.id === personId);
         if (index !== -1) {
             product.eatBy.splice(index, 1);
         }
     }
-    console.log(product.eatBy)
-
+    console.log(product.eatBy);
 }
 
 const toggle = () => {
