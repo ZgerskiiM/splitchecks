@@ -1,5 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
+
 const router = useRouter()
 const toogle = () => {
   router.push({ name: 'addpeople' });

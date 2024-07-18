@@ -1,6 +1,6 @@
 <script setup>
 import { useProductStore } from "/src/stores/ProductStore";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -44,11 +44,13 @@ function calculateDebts() {
   arrDebtors.value = expenses.filter((exp) => exp.debt.price > 0);
 }
 
-calculateDebts();
-
 const toggle = () => {
   router.push({ name: "Home" });
 };
+
+onMounted(() => {
+  calculateDebts();
+})
 </script>
 
 <template>
@@ -59,14 +61,10 @@ const toggle = () => {
     <v-divider></v-divider>
     <v-container>
       <v-list v-for="debtor in arrDebtors" :key="debtor.id">
-        <v-list-item v-if="debtor.debt.price > 0"
-          ><strong>{{ debtor.name }}</strong> должен(на)
-          <strong>{{ debtor.debt.name }}</strong>
-          {{ debtor.debt.price }}</v-list-item
-        >
-        <v-list-item v-else-if="debtor.debt.price <= 0"
-          ><strong>{{ debtor.name }}</strong> Никому не должен(на)</v-list-item
-        >
+        <v-list-item v-if="debtor.debt.price > 0"><strong>{{ debtor.name }}</strong> должен(на)<strong> {{ debtor.debt.name }} </strong> {{ debtor.debt.price }}
+        </v-list-item>
+        <v-list-item v-else-if="debtor.debt.price <= 0"><strong>{{ debtor.name }}</strong> Никому не должен(на)
+        </v-list-item>
       </v-list>
     </v-container>
   </v-card>

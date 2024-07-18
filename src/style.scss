@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
   font-family: "Montserrat", sans-serif;
   line-height: 1.5;
@@ -6,7 +8,6 @@
   color-scheme: light;
   color: rgba(0, 0, 0, 0.87);
   background-color: #debc66;
-
 }
 
 * {
@@ -18,7 +19,6 @@ body {
   margin: 0;
   display: flex;
   place-items: flex-start;
-
 }
 
 h1 {
@@ -45,5 +45,3 @@ h1 {
     background-color: #f9f9f9;
   }
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');

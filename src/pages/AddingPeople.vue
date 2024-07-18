@@ -15,7 +15,7 @@ const addUser = () => {
       peopleStore.addPerson(newPerson);
       firstname.value = "";
     }
-}
+  }
 };
 const removeUser = (index) => {
   peopleStore.removePerson(index);
@@ -45,14 +45,16 @@ const toogle = () => {
       <v-list class="d-flex flex-column align-start">
         <v-list-item v-for="(person, index) in peopleStore.people" :key="person.id">
           <v-card>
-            <v-list-item-content class="d-flex flex-row justify-start align-center mt-5">
-              <v-list-item-action class="mr-5 pb-5 pl-4">
-                <v-btn icon="mdi-close" @click="removeUser(index)"> </v-btn>
-              </v-list-item-action>
-              <v-text-field readonly variant="solo">
-                {{ person.name }}
-              </v-text-field>
-            </v-list-item-content>
+            <v-list-item class="d-flex flex-row justify-start ">
+              <v-container class="d-flex ">
+                <v-text-field readonly variant="solo">
+                  {{ person.name }}
+                </v-text-field>
+                <v-list-item-action class="mr-5 pb-5 pl-4">
+                  <v-btn icon="mdi-close" @click="removeUser(index)"> </v-btn>
+                </v-list-item-action>
+              </v-container>
+            </v-list-item>
           </v-card>
         </v-list-item>
       </v-list>
@@ -70,10 +72,6 @@ const toogle = () => {
 
 .v-text-field {
   width: 12em;
-}
-
-.v-list-item-avatar {
-  background-color: blue;
 }
 
 .v-divider {

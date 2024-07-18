@@ -73,19 +73,34 @@ const toggle = () => {
     <h2>Добавьте продукты</h2>
     <v-form v-model="valid">
       <v-container class="d-flex flex-column justify-center align-center">
-        <v-text-field v-model="foodname" label="Название продукта" :rules="[rules.required]"></v-text-field>
-        <v-text-field v-model="foodcost" label="Цена" type="number" :rules="[rules.required, rules.number, rules.positive]"></v-text-field>
+        <v-text-field
+          v-model="foodname"
+          label="Название продукта"
+          :rules="[rules.required]"
+        >
+        </v-text-field>
+        <v-text-field
+          v-model="foodcost"
+          label="Цена"
+          type="number"
+          :rules="[rules.required, rules.number, rules.positive]"
+        >
+        </v-text-field>
         <v-select
-    v-model="payerPerson"
-    :items="peopleList"
-    item-title="title"
-    item-value="value"
-    label="Кто платил?"
-    :rules="[rules.required]"
-  ></v-select>        <v-container>
+          item-title="title"
+          item-value="value"
+          v-model="payerPerson"
+          label="Кто платил?"
+          :items="peopleList"
+          :rules="[rules.required]"
+        >
+        </v-select>
           <p>Кто ел?</p>
-          <v-checkbox v-for="person in peopleStore.people" :key="person.id" :label="person.name" v-model="peopleSelection[person.id]"></v-checkbox>
-        </v-container>
+          <v-checkbox v-for="person in peopleStore.people" :key="person.id"
+            v-model="peopleSelection[person.id]"
+            :label="person.name"
+          >
+          </v-checkbox>
         <v-btn class="mt-3" @click="addProduct" :disabled="!isFormValid">Добавить</v-btn>
       </v-container>
       <v-divider></v-divider>
@@ -94,25 +109,46 @@ const toggle = () => {
           <v-list-item v-for="(product, index) in productStore.products" :key="product.id">
             <v-card>
               <v-list-item class="d-flex flex-column justify-start align-start ma-5">
-                  <v-list-item-action class="mr-5 pb-5 pl-4">
-                    <v-btn icon="mdi-close" @click="removeProduct(index)"></v-btn>
-                  </v-list-item-action>
+                  <v-container class="d-flex flex-row" id="dsa">
                   <div>
-                    <p>Название продукта:</p>
-                    <v-text-field variant="solo" readonly :value="product.foodname"></v-text-field>
+                    <p>Название</p>
+                    <v-text-field
+                      variant="solo"
+                      readonly
+                      :value="product.foodname"
+                    >
+                    </v-text-field>
                   </div>
                   <div>
-                    <p>Цена:</p>
-                    <v-text-field variant="solo" readonly :value="product.foodcost"></v-text-field>
+                    <p>Цена</p>
+                    <v-text-field
+                      variant="solo"
+                      readonly
+                      :value="product.foodcost"
+                    >
+                  </v-text-field>
                   </div>
                   <div>
-                    <p>Кто заплатил:</p>
-                    <v-text-field variant="solo" readonly :value="product.payerPerson"></v-text-field>
+                    <p>Кто заплатил</p>
+                    <v-text-field
+                      variant="solo"
+                      readonly
+                      :value="product.payerPerson"
+                    >
+                  </v-text-field>
                   </div>
-                    <p>Кто ел:</p>
-                    <v-text-field v-for="person in product.eatBy" :key="person.id" variant="solo" readonly>
+                    <p>Кто ел</p>
+                    <v-text-field v-for="person in product.eatBy" :key="person.id"
+                      variant="solo"
+                      readonly
+                    >
                       {{ person.name }}
                     </v-text-field>
+                    <v-list-item-action class="mr-5 pb-5 pl-4">
+                    <v-btn icon="mdi-close" @click="removeProduct(index)"></v-btn>
+                  </v-list-item-action>
+                  </v-container>
+
                   </v-list-item>
             </v-card>
           </v-list-item>
@@ -132,7 +168,7 @@ const toggle = () => {
 }
 
 .v-text-field {
-  width: 12em;
+  width: 13em;
 }
 
 .v-card {
@@ -152,5 +188,12 @@ const toggle = () => {
 .v-checkbox {
   border: 0.0625em solid white;
   border-radius: 1em;
+}
+
+#dsa {
+  .v-text-field {
+    width: 8em;
+    height: 5em;
+  }
 }
 </style>
