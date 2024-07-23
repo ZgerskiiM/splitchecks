@@ -12,10 +12,12 @@ const foodname = ref("");
 const foodcost = ref("");
 const payerPerson = ref(null);
 const valid = ref(true);
+const form = ref(null);
 const selectedEaters = ref([]);
 
 const rules = {
   required: (value) => !!value || "Обязательное поле",
+  empty: (value) => value.length > 0 || "Не должно быть пустым",
   number: (value) => (!isNaN(parseFloat(value)) && isFinite(value)) || "Должно быть числом",
   positive: (value) => parseFloat(value) > 0 || "Должно быть положительным числом",
 };
@@ -32,7 +34,6 @@ const isFormValid = computed(() => {
 });
 
 const addProduct = () => {
-  if (isFormValid.value) {
     const payer = peopleStore.people.find((person) => person.id === payerPerson.value);
     const newProduct = {
       id: uuidv4(),
@@ -47,7 +48,9 @@ const addProduct = () => {
     foodcost.value = "";
     payerPerson.value = null;
     selectedEaters.value = [];
-  }
+    if (form.value) {
+      form.value.resetValidation();
+    }
 };
 
 const removeProduct = (index) => {
@@ -70,46 +73,43 @@ const toggleEaters = (product) => {
 <template>
   <v-card class="d-flex flex-column align-center justify-center pt-1" width="62.5em">
     <h2>Добавьте продукты</h2>
-    <v-form v-model="valid">
+    <v-form ref="form" v-model="valid">
       <v-container class="d-flex flex-column justify-center align-center">
         <v-text-field
-        v-model="foodname"
-        label="Название продукта"
-        :rules="[rules.required]"
-        >
-        </v-text-field>
+          v-model="foodname"
+          label="Название продукта"
+          :rules="[rules.required,rules.positive]"
+        ></v-text-field>
         <v-text-field
-        v-model="foodcost"
-        label="Цена" type="number"
-        :rules="[rules.required, rules.number, rules.positive]"
-        >
-        </v-text-field>
+          v-model="foodcost"
+          label="Цена"
+          type="number"
+          :rules="[rules.required, rules.number, rules.positive]"
+        ></v-text-field>
         <v-select
-        item-title="title"
-        item-value="value"
-        v-model="payerPerson"
-        label="Кто платил?"
-        :items="peopleList"
-        :rules="[rules.required]"
-        >
-        </v-select>
+          v-model="payerPerson"
+          item-title="title"
+          item-value="value"
+          label="Кто платил?"
+          :items="peopleList"
+          :rules="[rules.required]"
+        ></v-select>
         <v-select
-        item-title="title"
-        item-value="value"
-        v-model="selectedEaters"
-        label="Кто ел?"
-        :items="peopleList"
-        multiple
-        chips
-        :rules="[rules.required]"
-        >
-        </v-select>
+          v-model="selectedEaters"
+          item-title="title"
+          item-value="value"
+          label="Кто ел?"
+          :items="peopleList"
+          multiple
+          chips
+          :rules="[rules.required]"
+        ></v-select>
         <v-btn
-        class="mt-3"
-        @click="addProduct"
-        :disabled="!isFormValid"
-        >Добавить
-        </v-btn>
+          class="mt-3"
+          text="Добавить"
+          :disabled="!isFormValid"
+          @click="addProduct"
+        ></v-btn>
       </v-container>
       <v-divider></v-divider>
       <v-container>
@@ -128,17 +128,17 @@ const toggleEaters = (product) => {
                     <p>Кто заплатил: {{ product.payerPerson }}</p>
                   </v-card>
                   <v-btn
-                  @click="toggleEaters(product)"
                   class="mt-3"
+                  width="12em"
+                  @click="toggleEaters(product)"
                   >
                     <p>{{ product.show ? "Скрыть" : "Показать кто ел" }}</p>
                   </v-btn>
                   <v-btn
                   icon="mdi-delete"
-                  @click="removeProduct(index)"
                   class="ml-5 mt-2"
-                  >
-                  </v-btn>
+                  @click="removeProduct(index)"
+                  ></v-btn>
                 </v-container>
                 <v-expand-transition>
                   <v-card v-if="product.show">
@@ -158,10 +158,10 @@ const toggleEaters = (product) => {
   </v-card>
   <v-card class="d-flex justify-center align-center mt-2" height="4em">
     <v-btn
-    @click="toggle"
     width="50em"
-    >Результаты
-    </v-btn>
+    text="Результаты"
+    @click="toggle"
+    ></v-btn>
   </v-card>
 </template>
 

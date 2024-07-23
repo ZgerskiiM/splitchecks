@@ -61,15 +61,21 @@ onMounted(() => {
     <v-divider></v-divider>
     <v-container>
       <v-list v-for="debtor in arrDebtors" :key="debtor.id">
-        <v-list-item v-if="debtor.debt.price > 0"><strong>{{ debtor.name }}</strong> должен(на)<strong> {{ debtor.debt.name }} </strong> {{ debtor.debt.price }}
+        <v-list-item v-if="debtor.debt.price > 0">
+          <strong>{{ debtor.name }}</strong> должен(на) <strong> {{ debtor.debt.name }} </strong> {{ debtor.debt.price }}
         </v-list-item>
-        <v-list-item v-else-if="debtor.debt.price <= 0"><strong>{{ debtor.name }}</strong> Никому не должен(на)
+        <v-list-item v-else-if="debtor.debt.price <= 0">
+          <strong>{{ debtor.name }}</strong> Никому не должен(на)
         </v-list-item>
       </v-list>
     </v-container>
   </v-card>
   <v-card class="d-flex justify-center align-center mt-2" height="4em">
-    <v-btn @click="toggle" width="50em">На главную</v-btn>
+    <v-btn
+      width="50em"
+      text="На главную"
+      @click="toggle"
+    ></v-btn>
   </v-card>
 </template>
 

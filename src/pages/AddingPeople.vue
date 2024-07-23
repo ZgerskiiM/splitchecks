@@ -37,11 +37,13 @@ const toogle = () => {
     <v-form v-model="valid" @submit.prevent="">
       <v-container>
         <v-text-field
-        v-model="firstname"
-        label="Введите имя"
-        >
-        </v-text-field>
-        <v-btn @click="addUser">Добавить</v-btn>
+          v-model="firstname"
+          label="Введите имя"
+        ></v-text-field>
+        <v-btn
+          text="Добавить"
+          @click="addUser"
+          ></v-btn>
       </v-container>
     </v-form>
     <v-divider></v-divider>
@@ -52,17 +54,15 @@ const toogle = () => {
             <v-list-item class="d-flex flex-row justify-start ">
               <v-container class="d-flex ">
                 <v-text-field
-                readonly
-                variant="solo"
-                >
-                  {{ person.name }}
+                  readonly
+                  variant="solo"
+                >{{ person.name }}
                 </v-text-field>
                 <v-list-item-action class="mr-5 pb-5 pl-4">
                   <v-btn
-                  icon="mdi-close"
-                  @click="removeUser(index)"
-                  >
-                  </v-btn>
+                    icon="mdi-close"
+                    @click="removeUser(index)"
+                  ></v-btn>
                 </v-list-item-action>
               </v-container>
             </v-list-item>
@@ -72,7 +72,11 @@ const toogle = () => {
     </v-container>
   </v-card>
   <v-card class="d-flex justify-center align-center mt-2" height="4em">
-    <v-btn @click="toogle" width="50em">Перейти к продуктам </v-btn>
+    <v-btn
+      width="50em"
+      @click="toogle"
+    >Перейти к продуктам
+    </v-btn>
   </v-card>
 </template>
 
